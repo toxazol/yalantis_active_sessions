@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Watcher conuter. Built on Socket.IO</title>
+  </head>
+  <body>
+    Currently open times:
+    <p id="user_counter_val">0</p>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+    <script>
+      $(function () {
+        var socket = io();
+        socket.on('counter_changed', function(couter_val){
+          $('#user_counter_val').text(couter_val);
+          window.scrollTo(0, document.body.scrollHeight);
+        });
+      });
+    </script>
+  </body>
+</html>
