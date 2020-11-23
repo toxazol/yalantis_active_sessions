@@ -1,14 +1,19 @@
-# Minimal counter of users curretly connected to the server.
+## A service that counts users which opened current page of website
 
-Simple example based on [node js](https://nodejs.org/en/).
+
 #### Requrements:
-* socket.io
-* express
 * http
+* util
+* redis
+* express
+* socket.io
+* express-session
+* express-socket.io-session
 
 #### To run:
 * git clone
 * `node index.js`
-* Open `http://localhost:3000/` x times to se how the counter changes it's value in all tabs.
-
-No error handling.
+* Open or close `http://localhost:3000/` in new incognito tabs 
+to chage active sessions counter. Opening new tabs in a window
+with an active connection won't affect the counter because server
+counts only unique users by assigning cookies to them.
