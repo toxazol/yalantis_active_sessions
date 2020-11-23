@@ -7,7 +7,8 @@ var session = require("express-session")({
   saveUninitialized: true
 });
 var sharedsession = require("express-socket.io-session");
-var online_counter = 0;
+
+//var online_counter = 0;
 
 // Attach session
 app.use(session);
@@ -17,36 +18,28 @@ io.use(sharedsession(session, {
   autoSave: true
 }));
 
+function emit_sessions_cnt() {
+  session.store.length((any, len) => {
+    io.emit('counter_changed', len);
+  });
+}
+
+function get_sessions_cnt() {
+  let sess_cnt;
+  session.store.length((any, len) => {
+    sess_cnt = len;
+  });
+  return sess_cnt;
+}
+
 app.get('/', (req, res) => {
-  console.log(req.session);
-  if (req.session.views) {
-    req.session.views++
-  }
-  else {
-    req.session.views = 1;
-  }
-  res.sendFile(__dirname + '/index.html', { token: online_counter });
+  res.sendFile(__dirname + '/index.html', { token: get_sessions_cnt() });
 });
 
 io.on('connection', (socket) => {
-  console.log('socket.handshake.session.views: ', socket.handshake.session.views);
-  if (socket.handshake.session.views <= 1) {
-    online_counter++;
-    console.log('new user connected:', online_counter);
-  }
-  else {
-    console.log('old user connected:', online_counter);
-  }
-  io.emit('counter_changed', online_counter);
-
-  socket.on('disconnect', () => {
-    socket.handshake.session.views--;
-    if (socket.handshake.session.views <= 0) {
-      online_counter--;
-      io.emit('counter_changed', online_counter);
-      console.log('a user disconnected:', online_counter);
-    }
-  });
+  emit_sessions_cnt();
+  
+  socket.on('disconnect', emit_sessions_cnt);
 });
 
 http.listen(3000, () => {
