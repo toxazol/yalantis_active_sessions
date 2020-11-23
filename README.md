@@ -1,6 +1,11 @@
 ## A service that counts users which opened current page of website
 
-#### To run:
+### Try:
+[active-sess-counter](https://active-sess-counter.glitch.me/)
+> request link from several devices/browsers/incognito tabs simultaniously
+> to test counter update.
+
+#### To build and run:
 * [install redis if not installed](https://redis.io/topics/quickstart)
 * git clone
 * npm install
