@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
       .then(views => {
         if (views <= 0)
           return hdelAsync("online_users", socket.handshake.session.id)
-            .then(hlenAsync("online_users"));
+            .then(res => hlenAsync("online_users"));
         else
           return hlenAsync("online_users");
       })
