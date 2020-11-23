@@ -12,7 +12,8 @@
 
 #### To run:
 * git clone
-* `node index.js`
+* npm install ????????
+* `npm run start`
 * Open or close `http://localhost:3000/` in new incognito tabs 
 to chage active sessions counter. Opening new tabs in a window
 with an active connection won't affect the counter because server
